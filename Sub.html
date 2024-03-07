@@ -1,0 +1,47 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Submission</title>
+</head>
+<body>
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="submitImage()">Submit</button>
+
+    <script>
+        async function submitImage() {
+            const input = document.getElementById('imageInput');
+            if (input.files.length > 0) {
+                const file = input.files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+
+                // Substitute your webhook URL here
+                const webhookUrl = 'https://discord.com/api/webhooks/1215135786073067580/LodP6tFhptaA7syN07uIt49qRODUknXFOkPXRHLurUO2kwJf8izslr8CaVZIOnOuYAgK';
+
+                formData.append('payload_json', JSON.stringify({
+                    content: "Image submission:",
+                }));
+
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Image submitted successfully!');
+                    } else {
+                        alert('Submission failed.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+```
